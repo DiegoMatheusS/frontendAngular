@@ -4,12 +4,14 @@ import { EMPTY, Observable} from 'rxjs';
 import { catchError, map } from 'rxjs/operators'
 import { Iprodutos } from '../model/IProduto.model';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from './../../environments/environment.prod';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProdutosService {
-  private URL: string = "http://localhost:3000/produtos";
+  private URL: string = environment.URL;
+};
 
   constructor(private http: HttpClient, private toastr: ToastrService) { }
 
