@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from './../../environments/environment.prod';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProdutosService {
   private URL: string = environment.URL;
