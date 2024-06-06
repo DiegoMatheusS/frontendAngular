@@ -4,14 +4,13 @@ import { EMPTY, Observable} from 'rxjs';
 import { catchError, map } from 'rxjs/operators'
 import { Iprodutos } from '../model/IProduto.model';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProdutosService {
   private URL: string = environment.URL;
-};
 
   constructor(private http: HttpClient, private toastr: ToastrService) { }
 
@@ -29,16 +28,17 @@ export class ProdutosService {
       catchError(erro => this.exibiErro(erro)));
   }
 
-
-
   cadastrar(produto: Iprodutos): Observable<Iprodutos> {
     return this.http.post<Iprodutos[]>(this.URL, produto).pipe(map(retorno => retorno),
     catchError(erro => this.exibiErro(erro)));
   }
 
+
   atualizar(produto: Iprodutos): Observable<Iprodutos> {
-    return this.http.post<Iprodutos[]>(`${this.URL}/ ${produto.id}`,produto).pipe(map(retorno => retorno),
-    catchError(erro => this.exibiErro(erro)));
+    return this.http.put<Iprodutos>(`${this.URL}/${produto.id}`,produto).pipe(
+      map(retorno => retorno),
+    catchError(erro => this.exibiErro(erro))
+    );
   }
 
 
@@ -57,7 +57,7 @@ export class ProdutosService {
 
 
   exibirMensagem(titulo: string, mensagem: string, tipo: string): void{
-    this.toastr.show(mensagem, titulo,{closeButton: true, progressBar: true}, tipo)
+    this.toastr.show(mensagem, titulo,{closeButton: true, progressBar: true}, tipo);
 
   }
 }
